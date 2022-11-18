@@ -23,6 +23,8 @@ import org.web3j.utils.Convert;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.List;
 
 public class Start {
@@ -43,11 +45,12 @@ public class Start {
             EventThreadPool.init(1);
 
             MagicianBlockchainScan.create()
-                    .setRpcUrl("https://data-seed-prebsc-1-s1.binance.org:8545/")
+                    .setRpcUrl("https://bsc-dataseed1.binance.org",
+                            new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 4780)))
                     .setChainType(ChainType.ETH)
                     .setScanPeriod(5000)
                     .setScanSize(1000)
-                    .setBeginBlockNumber(BigInteger.valueOf(24318610))
+                    .setBeginBlockNumber(BigInteger.valueOf(2431860))
                     .addEthMonitorEvent(new EventOne())
                     .addEthMonitorEvent(new EventThree())
                     .addEthMonitorEvent(new EventTwo())
@@ -64,7 +67,7 @@ public class Start {
             String toAddress = "";
             String contractAddress = "";
             String fromAddressPrivateKey = "";
-            Web3j web3j = Web3j.build(new HttpService("https://data-seed-prebsc-1-s1.binance.org:8545/"));
+            Web3j web3j = Web3j.build(new HttpService("https://bsc-dataseed1.binance.org"));
 
 
             EthHelper ethHelper =  MagicianWeb3.getEthBuilder().getEth(web3j, fromAddressPrivateKey);

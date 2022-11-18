@@ -10,8 +10,7 @@ import com.blockchain.scanning.monitor.filter.EthMonitorFilter;
 public class EventThree implements EthMonitorEvent {
     @Override
     public EthMonitorFilter ethMonitorFilter() {
-        return EthMonitorFilter.builder()
-                .setFromAddress("");
+        return null;
     }
 
     @Override

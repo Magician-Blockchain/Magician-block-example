@@ -11,6 +11,9 @@ import com.blockchain.web3.eth.codec.EthAbiCodec;
 import com.blockchain.web3.eth.contract.EthContract;
 import com.blockchain.web3.eth.contract.model.SendResultModel;
 import com.blockchain.web3.eth.helper.EthHelper;
+import okhttp3.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.web3j.abi.TypeReference;
@@ -21,6 +24,7 @@ import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Convert;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.InetSocketAddress;
@@ -40,23 +44,32 @@ public class Start {
     /**
      *
      */
-    private static void scanningExample(){
+    private static void scanningExample() {
         try {
             EventThreadPool.init(1);
 
             MagicianBlockchainScan.create()
                     .setRpcUrl("https://bsc-dataseed1.binance.org",
-                            new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 4780)))
+                            new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 4780)),
+                            (Route route, Response response) -> {
+
+                                //设置代理服务器账号密码
+                                String credential = Credentials.basic("用户名", "密码");
+                                return response.request().newBuilder()
+                                        .header("Proxy-Authorization", credential)
+                                        .build();
+                            }
+                    )
                     .setChainType(ChainType.ETH)
                     .setScanPeriod(5000)
                     .setScanSize(1000)
-                    .setBeginBlockNumber(BigInteger.valueOf(2431860))
+                    .setBeginBlockNumber(BigInteger.valueOf(243186))
                     .addEthMonitorEvent(new EventOne())
                     .addEthMonitorEvent(new EventThree())
                     .addEthMonitorEvent(new EventTwo())
                     .start();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             logger.error("Scanning Exception", e);
         }
     }

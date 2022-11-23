@@ -2,7 +2,6 @@ package com.block.test;
 
 import com.block.test.event.EventOne;
 import com.block.test.event.EventThree;
-import com.block.test.event.EventTwo;
 import com.blockchain.scanning.MagicianBlockchainScan;
 import com.blockchain.scanning.biz.thread.EventThreadPool;
 import com.blockchain.scanning.commons.enums.ChainType;
@@ -11,9 +10,6 @@ import com.blockchain.web3.eth.codec.EthAbiCodec;
 import com.blockchain.web3.eth.contract.EthContract;
 import com.blockchain.web3.eth.contract.model.SendResultModel;
 import com.blockchain.web3.eth.helper.EthHelper;
-import okhttp3.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.web3j.abi.TypeReference;
@@ -24,11 +20,8 @@ import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Convert;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.util.List;
 
 public class Start {
@@ -49,24 +42,12 @@ public class Start {
             EventThreadPool.init(1);
 
             MagicianBlockchainScan.create()
-                    .setRpcUrl("https://bsc-dataseed1.binance.org",
-                            new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 4780)),
-                            (Route route, Response response) -> {
-
-                                //设置代理服务器账号密码
-                                String credential = Credentials.basic("用户名", "密码");
-                                return response.request().newBuilder()
-                                        .header("Proxy-Authorization", credential)
-                                        .build();
-                            }
-                    )
+                    .setRpcUrl("https://data-seed-prebsc-1-s1.binance.org:8545/")
                     .setChainType(ChainType.ETH)
-                    .setScanPeriod(5000)
-                    .setScanSize(1000)
-                    .setBeginBlockNumber(BigInteger.valueOf(243186))
+                    .setScanPeriod(3000)
+                    .setBeginBlockNumber(BigInteger.valueOf(24836913))
                     .addEthMonitorEvent(new EventOne())
                     .addEthMonitorEvent(new EventThree())
-                    .addEthMonitorEvent(new EventTwo())
                     .start();
 
         } catch (Exception e) {
@@ -80,15 +61,16 @@ public class Start {
             String toAddress = "";
             String contractAddress = "";
             String fromAddressPrivateKey = "";
-            Web3j web3j = Web3j.build(new HttpService("https://bsc-dataseed1.binance.org"));
+            Web3j web3j = Web3j.build(new HttpService("https://data-seed-prebsc-1-s1.binance.org:8545/"));
 
 
-            EthHelper ethHelper =  MagicianWeb3.getEthBuilder().getEth(web3j, fromAddressPrivateKey);
+            EthHelper ethHelper =  MagicianWeb3.getEthBuilder().getEth(web3j);
 
             System.out.println(ethHelper.balanceOf(fromAddress));
 
             ethHelper.transfer(
                     toAddress,
+                    fromAddressPrivateKey,
                     BigDecimal.valueOf(1),
                     Convert.Unit.ETHER);
 
@@ -96,7 +78,7 @@ public class Start {
 
             // -----------------------------------------------------------------------------------------------
 
-            EthContract ethContract = MagicianWeb3.getEthBuilder().getEthContract(web3j, fromAddressPrivateKey);
+            EthContract ethContract = MagicianWeb3.getEthBuilder().getEthContract(web3j);
             EthAbiCodec ethAbiCodec = MagicianWeb3.getEthBuilder().getEthAbiCodec();
 
             List<Type> result =  ethContract.select(
@@ -113,6 +95,7 @@ public class Start {
             SendResultModel sendResultModel = ethContract.sendRawTransaction(
                     fromAddress,
                     contractAddress,
+                    fromAddressPrivateKey,
                     ethAbiCodec.getInputData(
                             "transfer",
                             new Address(toAddress),

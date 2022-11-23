@@ -10,13 +10,13 @@ import com.blockchain.scanning.monitor.filter.EthMonitorFilter;
 public class EventThree implements EthMonitorEvent {
 
     /**
-     * 监控：地址[0x552115849813d334C58f2757037F68E296678ced]收到了币的 交易事件
+     * 监控：地址[0x552115849813d334C58f2757037F68E2963C4c5e]收到了币的 交易事件
      * @return
      */
     @Override
     public EthMonitorFilter ethMonitorFilter() {
         return EthMonitorFilter.builder()
-                .setToAddress("0x552115849813d334C58f2757037F68E296678ced");
+                .setToAddress("0x552115849813d334C58f2757037F68E2963C4c5e");
     }
 
     @Override

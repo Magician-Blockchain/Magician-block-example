@@ -21,14 +21,14 @@ import java.util.List;
 public class EventOne implements EthMonitorEvent {
 
     /**
-     * 监控：合约[0x428862f821b1A5eFff5B258583572451229eUin7]的transfer函数被调用了，
-     * 并且函数的第一个参数是[0x552115849813d334C58f2757037F68E296678ced] 的交易事件
+     * 监控：合约[0x428862f821b1A5eFff5B258583572451229eEeA6]的transfer函数被调用了，
+     * 并且函数的第一个参数是[0x552115849813d334C58f2757037F68E2963C4c5e] 的交易事件
      * @return
      */
     @Override
     public EthMonitorFilter ethMonitorFilter() {
         return EthMonitorFilter.builder()
-                .setToAddress("0x428862f821b1A5eFff5B258583572451229eUin7")
+                .setToAddress("0x428862f821b1A5eFff5B258583572451229eEeA6")
                 .setInputDataFilter(
                         InputDataFilter.create()
                                 .setFunctionCode(ERC20.TRANSFER.getFunctionCode())
@@ -36,7 +36,7 @@ public class EventOne implements EthMonitorEvent {
                                         new TypeReference<Address>(){},
                                         new TypeReference<Uint256>(){}
                                 )
-                                .setValue("0x552115849813d334C58f2757037F68E296678ced", null)
+                                .setValue("0x552115849813d334C58f2757037F68E2963C4c5e", null)
                 );
     }
 

@@ -45,7 +45,7 @@ public class Start {
                     .setRpcUrl("https://data-seed-prebsc-1-s1.binance.org:8545/")
                     .setChainType(ChainType.ETH)
                     .setScanPeriod(3000)
-                    .setBeginBlockNumber(BigInteger.valueOf(24836913))
+                    .setBeginBlockNumber(BigInteger.valueOf(24836912))
                     .addEthMonitorEvent(new EventOne())
                     .addEthMonitorEvent(new EventThree())
                     .start();

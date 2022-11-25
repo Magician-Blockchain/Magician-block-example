@@ -6,7 +6,6 @@ import com.block.test.retry.EthRetry;
 import com.blockchain.scanning.MagicianBlockchainScan;
 import com.blockchain.scanning.biz.thread.EventThreadPool;
 import com.blockchain.scanning.commons.enums.BlockEnums;
-import com.blockchain.scanning.commons.enums.ChainType;
 import com.blockchain.scanning.rpcinit.impl.EthRpcInit;
 import com.blockchain.web3.MagicianWeb3;
 import com.blockchain.web3.eth.codec.EthAbiCodec;
@@ -51,7 +50,7 @@ public class Start {
                                     .addRpcUrl("https://data-seed-prebsc-2-s1.binance.org:8545")
                                     .addRpcUrl("https://data-seed-prebsc-1-s2.binance.org:8545")
                     )
-                    .setScanPeriod(1000)
+                    .setScanPeriod(500)
 //                    .setBeginBlockNumber(BigInteger.valueOf(24836912))
                     .setBeginBlockNumber(BlockEnums.LAST_BLOCK_NUMBER.getValue())
                     .addEthMonitorEvent(new EventOne())

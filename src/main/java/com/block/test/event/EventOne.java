@@ -30,7 +30,7 @@ public class EventOne implements EthMonitorEvent {
         return EthMonitorFilter.builder()
                 .setToAddress("0x428862f821b1A5eFff5B258583572451229eEeA6")
                 .setInputDataFilter(
-                        InputDataFilter.create()
+                        InputDataFilter.builder()
                                 .setFunctionCode(ERC20.TRANSFER.getFunctionCode())
                                 .setTypeReferences(
                                         new TypeReference<Address>(){},

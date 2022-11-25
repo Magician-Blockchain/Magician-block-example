@@ -2,9 +2,12 @@ package com.block.test;
 
 import com.block.test.event.EventOne;
 import com.block.test.event.EventThree;
+import com.block.test.retry.EthRetry;
 import com.blockchain.scanning.MagicianBlockchainScan;
 import com.blockchain.scanning.biz.thread.EventThreadPool;
+import com.blockchain.scanning.commons.enums.BlockEnums;
 import com.blockchain.scanning.commons.enums.ChainType;
+import com.blockchain.scanning.rpcinit.impl.EthRpcInit;
 import com.blockchain.web3.MagicianWeb3;
 import com.blockchain.web3.eth.codec.EthAbiCodec;
 import com.blockchain.web3.eth.contract.EthContract;
@@ -39,15 +42,21 @@ public class Start {
      */
     private static void scanningExample() {
         try {
-            EventThreadPool.init(1);
+            EventThreadPool.init(2);
 
             MagicianBlockchainScan.create()
-                    .setRpcUrl("https://data-seed-prebsc-1-s1.binance.org:8545/")
-                    .setChainType(ChainType.ETH)
-                    .setScanPeriod(3000)
-                    .setBeginBlockNumber(BigInteger.valueOf(24836912))
+                    .setRpcUrl(
+                            EthRpcInit.create()
+                                    .addRpcUrl("https://data-seed-prebsc-1-s1.binance.org:8545")
+                                    .addRpcUrl("https://data-seed-prebsc-2-s1.binance.org:8545")
+                                    .addRpcUrl("https://data-seed-prebsc-1-s2.binance.org:8545")
+                    )
+                    .setScanPeriod(1000)
+//                    .setBeginBlockNumber(BigInteger.valueOf(24836912))
+                    .setBeginBlockNumber(BlockEnums.LAST_BLOCK_NUMBER.getValue())
                     .addEthMonitorEvent(new EventOne())
                     .addEthMonitorEvent(new EventThree())
+                    .setRetryStrategy(new EthRetry())
                     .start();
 
         } catch (Exception e) {

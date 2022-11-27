@@ -1,16 +1,14 @@
-package com.block.test;
+package com.block.test.scanning;
 
-import com.block.test.event.EventOne;
-import com.block.test.event.EventThree;
-import com.block.test.retry.EthRetry;
+import com.block.test.scanning.event.EventOne;
+import com.block.test.scanning.event.EventThree;
+import com.block.test.scanning.retry.EthRetry;
 import com.blockchain.scanning.MagicianBlockchainScan;
 import com.blockchain.scanning.biz.thread.EventThreadPool;
 import com.blockchain.scanning.commons.config.rpcinit.impl.EthRpcInit;
 import com.blockchain.scanning.commons.enums.BlockEnums;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.math.BigInteger;
 
 public class Start {
 

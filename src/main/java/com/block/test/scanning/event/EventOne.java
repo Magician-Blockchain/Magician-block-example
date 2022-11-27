@@ -1,4 +1,4 @@
-package com.block.test.event;
+package com.block.test.scanning.event;
 
 import com.blockchain.scanning.chain.model.TransactionModel;
 import com.blockchain.scanning.commons.codec.EthAbiCodec;

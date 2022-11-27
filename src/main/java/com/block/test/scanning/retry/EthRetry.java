@@ -1,4 +1,4 @@
-package com.block.test.retry;
+package com.block.test.scanning.retry;
 
 import com.blockchain.scanning.chain.RetryStrategy;
 

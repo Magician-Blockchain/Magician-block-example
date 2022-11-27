@@ -16,8 +16,8 @@
     <dependencies>
         <dependency>
             <groupId>com.github.yuyenews</groupId>
-            <artifactId>Magician-Web3</artifactId>
-            <version>1.0.5</version>
+            <artifactId>Magician-Scanning</artifactId>
+            <version>1.0.6</version>
         </dependency>
 
         <!-- This is the logging package, you must have it or the console will not see anything, any logging package that can bridge with slf4j is supported -->

@@ -1,11 +1,11 @@
 package com.block.test.event;
 
 import com.blockchain.scanning.chain.model.TransactionModel;
+import com.blockchain.scanning.commons.codec.EthAbiCodec;
 import com.blockchain.scanning.commons.token.ERC20;
 import com.blockchain.scanning.monitor.EthMonitorEvent;
 import com.blockchain.scanning.monitor.filter.EthMonitorFilter;
 import com.blockchain.scanning.monitor.filter.InputDataFilter;
-import com.blockchain.web3.MagicianWeb3;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Type;
@@ -50,7 +50,7 @@ public class EventOne implements EthMonitorEvent {
 
         System.out.println(template);
 
-        List<Type> result =  MagicianWeb3.getEthBuilder().getEthAbiCodec().decoderInputData(
+        List<Type> result = EthAbiCodec.decoderInputData(
                 "0x" + transactionModel.getEthTransactionModel().getInput().substring(10),
                 new TypeReference<Address>(){},
                 new TypeReference<Uint256>(){});

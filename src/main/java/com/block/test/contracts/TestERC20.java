@@ -1,6 +1,7 @@
 package com.block.test.contracts;
 
 import com.blockchain.tools.eth.contract.template.ERC20Contract;
+import com.blockchain.tools.eth.contract.util.model.SendModel;
 import com.blockchain.tools.eth.contract.util.model.SendResultModel;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
@@ -26,15 +27,17 @@ public class TestERC20 {
             System.out.println(new BigDecimal(amount).divide(decimal, 2, BigDecimal.ROUND_UP));
 
 
-
-
             SendResultModel sendResultModel = erc20Contract.transfer(
                     "0x552115849813d334C58f2757037F68E2963C4c5e",
                     new BigInteger("1000000000000000000"),
-                    "0xb4e32492E9725c3215F1662Cf28Db1862ed1EE84",
-                    "",
-                    null,
-                    null
+                    SendModel.builder()
+                            .setSenderAddress("0xb4e32492E9725c3215F1662Cf28Db1862ed1EE84")
+                            .setPrivateKey("")
+                            .setToAddress("0x428862f821b1A5eFff5B258583572451229eEeA6")
+                            .setValue(new BigInteger("1000000000"))
+                            .setGasPrice(new BigInteger("1000"))
+                            .setGasLimit(new BigInteger("800000"))
+
                     );
             System.out.println(sendResultModel.getEthGetTransactionReceipt());
 
@@ -42,10 +45,9 @@ public class TestERC20 {
             sendResultModel = erc20Contract.approve(
                     "0x552115849813d334C58f2757037F68E2963C4c5e",
                     new BigInteger("1000000000000000000"),
-                    "0xb4e32492E9725c3215F1662Cf28Db1862ed1EE84",
-                    "",
-                    null,
-                    null
+                    SendModel.builder()
+                            .setSenderAddress("0xb4e32492E9725c3215F1662Cf28Db1862ed1EE84")
+                            .setPrivateKey("")
             );
 
             System.out.println(sendResultModel.getEthGetTransactionReceipt());
@@ -54,13 +56,16 @@ public class TestERC20 {
                     "0xb4e32492E9725c3215F1662Cf28Db1862ed1EE84",
                     "0x552115849813d334C58f2757037F68E2963C4c5e",
                     new BigInteger("1000000000000000000"),
-                    "0x552115849813d334C58f2757037F68E2963C4c5e",
-                    "",
-                    null,
-                    null
+                    SendModel.builder()
+                            .setSenderAddress("0x552115849813d334C58f2757037F68E2963C4c5e")
+                            .setPrivateKey("")
             );
 
             System.out.println(sendResultModel.getEthGetTransactionReceipt());
+
+
+            amount = erc20Contract.balanceOf("0xb4e32492E9725c3215F1662Cf28Db1862ed1EE84");
+            System.out.println(new BigDecimal(amount).divide(decimal, 2, BigDecimal.ROUND_UP));
         } catch (Exception e){
             e.printStackTrace();
         }

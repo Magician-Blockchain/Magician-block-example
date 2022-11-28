@@ -2,6 +2,7 @@ package com.block.test.contracts;
 
 import com.blockchain.tools.eth.contract.template.ERC1155Contract;
 import com.blockchain.tools.eth.contract.template.ERC20Contract;
+import com.blockchain.tools.eth.contract.util.model.SendModel;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 
@@ -46,10 +47,9 @@ public class TestERC1155 {
             erc1155Contract.setApprovalForAll(
                     "0x552115849813d334C58f2757037F68E2963C4c5e",
                     true,
-                    "0xb4e32492E9725c3215F1662Cf28Db1862ed1EE84",
-                    "",
-                    null,
-                    null
+                    SendModel.builder()
+                            .setSenderAddress("0xb4e32492E9725c3215F1662Cf28Db1862ed1EE84")
+                            .setPrivateKey("")
             );
 
             erc1155Contract.safeTransferFrom(
@@ -58,10 +58,9 @@ public class TestERC1155 {
                     new BigInteger("1002"),
                     new BigInteger("1"),
                     new byte[0],
-                    "0xb4e32492E9725c3215F1662Cf28Db1862ed1EE84",
-                    "",
-                    null,
-                    null
+                    SendModel.builder()
+                            .setSenderAddress("0xb4e32492E9725c3215F1662Cf28Db1862ed1EE84")
+                            .setPrivateKey("")
             );
 
             List<BigInteger> tokenIds = new ArrayList<>();
@@ -78,10 +77,9 @@ public class TestERC1155 {
                     tokenIds,
                     amounts2,
                     new byte[0],
-                    "0xb4e32492E9725c3215F1662Cf28Db1862ed1EE84",
-                    "",
-                    null,
-                    null
+                    SendModel.builder()
+                            .setSenderAddress("0xb4e32492E9725c3215F1662Cf28Db1862ed1EE84")
+                            .setPrivateKey("")
             );
         } catch (Exception e){
             e.printStackTrace();

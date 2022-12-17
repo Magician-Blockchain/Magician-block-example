@@ -10,6 +10,8 @@ import com.blockchain.scanning.commons.enums.BlockEnums;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigInteger;
+
 public class Start {
 
     private static Logger logger = LoggerFactory.getLogger(Start.class);
@@ -18,7 +20,7 @@ public class Start {
         try {
             EventThreadPool.init(2);
 
-            MagicianBlockchainScan.create()
+            MagicianBlockchainScan magicianBlockchainScan = MagicianBlockchainScan.create()
                     .setRpcUrl(
                             EthRpcInit.create()
                                     .addRpcUrl("https://data-seed-prebsc-1-s1.binance.org:8545")
@@ -30,8 +32,12 @@ public class Start {
                     .setBeginBlockNumber(BlockEnums.LAST_BLOCK_NUMBER.getValue())
                     .addEthMonitorEvent(new EventOne())
                     .addEthMonitorEvent(new EventThree())
-                    .setRetryStrategy(new EthRetry())
-                    .start();
+                    .setRetryStrategy(new EthRetry());
+
+            magicianBlockchainScan.start();
+
+            logger.info("===========");
+//            magicianBlockchainScan.shutdown();
 
         } catch (Exception e) {
             logger.error("Scanning Exception", e);

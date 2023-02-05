@@ -1,11 +1,14 @@
 package com.block.test.scanning;
 
-import com.block.test.scanning.event.EventOne;
-import com.block.test.scanning.event.EventThree;
-import com.block.test.scanning.retry.EthRetry;
+import com.block.test.scanning.eth.event.EventOne;
+import com.block.test.scanning.eth.event.EventThree;
+import com.block.test.scanning.eth.retry.EthRetry;
+import com.block.test.scanning.tron.event.TronEventOne;
+import com.block.test.scanning.tron.retry.TronRetry;
 import com.blockchain.scanning.MagicianBlockchainScan;
 import com.blockchain.scanning.biz.thread.EventThreadPool;
 import com.blockchain.scanning.commons.config.rpcinit.impl.EthRpcInit;
+import com.blockchain.scanning.commons.config.rpcinit.impl.TronRpcInit;
 import com.blockchain.scanning.commons.enums.BlockEnums;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +19,46 @@ public class Start {
 
     private static Logger logger = LoggerFactory.getLogger(Start.class);
 
-    public static void main(String[] args) {
-        try {
-            EventThreadPool.init(2);
+    public static void main(String[] args) throws InterruptedException {
+        EventThreadPool.init(5);
 
+        MagicianBlockchainScan magicianBlockchainScan1 = tron();
+        MagicianBlockchainScan magicianBlockchainScan2 =  eth();
+
+//        Thread.sleep(20000);
+//        magicianBlockchainScan1.shutdown();
+//        magicianBlockchainScan2.shutdown();
+//        EventThreadPool.shutdown();
+    }
+
+    private static MagicianBlockchainScan tron(){
+        try {
+            MagicianBlockchainScan magicianBlockchainScan = MagicianBlockchainScan.create()
+                    .setRpcUrl(
+                            TronRpcInit.create()
+                                    .addRpcUrl("https://api.shasta.trongrid.io/wallet")
+                    )
+                    .setScanPeriod(500)
+//                    .setBeginBlockNumber(BigInteger.valueOf(31161000))
+                    .setBeginBlockNumber(BlockEnums.LAST_BLOCK_NUMBER.getValue())
+                    .addTronMonitorEvent(new TronEventOne())
+                    .setRetryStrategy(new TronRetry());
+
+            magicianBlockchainScan.start();
+
+//            Thread.sleep(20000);
+            logger.info("===========");
+//            magicianBlockchainScan.shutdown();
+
+            return magicianBlockchainScan;
+        } catch (Exception e) {
+            logger.error("Scanning Exception", e);
+        }
+        return null;
+    }
+
+    private static MagicianBlockchainScan eth(){
+        try {
             MagicianBlockchainScan magicianBlockchainScan = MagicianBlockchainScan.create()
                     .setRpcUrl(
                             EthRpcInit.create()
@@ -36,11 +75,14 @@ public class Start {
 
             magicianBlockchainScan.start();
 
+//            Thread.sleep(20000);
             logger.info("===========");
 //            magicianBlockchainScan.shutdown();
 
+            return magicianBlockchainScan;
         } catch (Exception e) {
             logger.error("Scanning Exception", e);
         }
+        return null;
     }
 }

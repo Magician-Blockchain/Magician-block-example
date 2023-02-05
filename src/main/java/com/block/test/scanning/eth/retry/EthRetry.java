@@ -1,4 +1,4 @@
-package com.block.test.scanning.retry;
+package com.block.test.scanning.eth.retry;
 
 import com.blockchain.scanning.chain.RetryStrategy;
 
@@ -8,6 +8,6 @@ public class EthRetry implements RetryStrategy {
 
     @Override
     public void retry(BigInteger bigInteger) {
-        System.out.println("哈哈哈哈哈哈哈哈" + bigInteger);
+        System.out.println("ETH 重试策略" + bigInteger);
     }
 }

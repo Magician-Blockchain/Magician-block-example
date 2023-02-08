@@ -10,6 +10,7 @@ import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Type;
 import org.web3j.abi.datatypes.generated.Uint256;
+import org.web3j.protocol.core.methods.response.EthBlock;
 
 import java.util.List;
 
@@ -42,16 +43,18 @@ public class EventOne implements EthMonitorEvent {
 
     @Override
     public void call(TransactionModel transactionModel) {
+        EthBlock.TransactionObject transactionObject = transactionModel.getEthTransactionModel().getTransactionObject();
+
         String template = "EventOne 扫描到了, hash:{0}, from:{1}, to: {2}, input: {3}";
-        template = template.replace("{0}", transactionModel.getEthTransactionModel().getHash());
-        template = template.replace("{1}", transactionModel.getEthTransactionModel().getFrom());
-        template = template.replace("{2}", transactionModel.getEthTransactionModel().getTo());
-        template = template.replace("{3}", transactionModel.getEthTransactionModel().getInput());
+        template = template.replace("{0}", transactionObject.getHash());
+        template = template.replace("{1}", transactionObject.getFrom());
+        template = template.replace("{2}", transactionObject.getTo());
+        template = template.replace("{3}", transactionObject.getInput());
 
         System.out.println(template);
 
         List<Type> result = EthAbiCodec.decoderInputData(
-                "0x" + transactionModel.getEthTransactionModel().getInput().substring(10),
+                "0x" + transactionObject.getInput().substring(10),
                 new TypeReference<Address>(){},
                 new TypeReference<Uint256>(){});
 

@@ -31,7 +31,7 @@ public class EventThree implements EthMonitorEvent {
 
 
         String template = "EventThree 扫描到了, hash:{0}, hash:{1}, from:{2}, to: {3}, input: {4}";
-        template = template.replace("{0}", transactionModel.getEthTransactionModel().getEthBlock().getBlock().getHash());
+        template = template.replace("{0}", ethBlock.getBlock().getHash());
         template = template.replace("{1}", transactionObject.getHash());
         template = template.replace("{2}", transactionObject.getFrom());
         template = template.replace("{3}", transactionObject.getTo());

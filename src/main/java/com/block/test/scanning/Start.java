@@ -28,7 +28,7 @@ public class Start {
 //        Thread.sleep(20000);
 //        magicianBlockchainScan1.shutdown();
 //        magicianBlockchainScan2.shutdown();
-//        EventThreadPool.shutdown();
+//        MagicianBlockchainScan.shutdownAll();
     }
 
     private static MagicianBlockchainScan tron(){
@@ -39,8 +39,9 @@ public class Start {
                                     .addRpcUrl("https://api.shasta.trongrid.io/wallet")
                     )
                     .setScanPeriod(500)
-//                    .setBeginBlockNumber(BigInteger.valueOf(31161000))
-                    .setBeginBlockNumber(BlockEnums.LAST_BLOCK_NUMBER.getValue())
+                    .setBeginBlockNumber(BigInteger.valueOf(31161000))
+//                    .setBeginBlockNumber(BlockEnums.LAST_BLOCK_NUMBER.getValue())
+                    .setEndBlockNumber(BigInteger.valueOf(31161000 + 20))
                     .addTronMonitorEvent(new TronEventOne())
                     .setRetryStrategy(new TronRetry());
 
@@ -67,8 +68,9 @@ public class Start {
                                     .addRpcUrl("https://data-seed-prebsc-1-s2.binance.org:8545")
                     )
                     .setScanPeriod(500)
-//                    .setBeginBlockNumber(BigInteger.valueOf(24833912))
-                    .setBeginBlockNumber(BlockEnums.LAST_BLOCK_NUMBER.getValue())
+                    .setBeginBlockNumber(BigInteger.valueOf(24833912))
+//                    .setBeginBlockNumber(BlockEnums.LAST_BLOCK_NUMBER.getValue())
+//                    .setEndBlockNumber(BigInteger.valueOf(24833912+30))
                     .addEthMonitorEvent(new EventOne())
                     .addEthMonitorEvent(new EventThree())
                     .setRetryStrategy(new EthRetry());

@@ -32,11 +32,12 @@ public class TestERC20 {
                     new BigInteger("1000000000000000000"),
                     SendModel.builder()
                             .setSenderAddress("0xb4e32492E9725c3215F1662Cf28Db1862ed1EE84")
-                            .setPrivateKey("")
+                            .setPrivateKey("0xc5e8d9324044970a6036ecc86203a6fb9f085dccb40f847704e12fc27a875295")
                             .setToAddress("0x428862f821b1A5eFff5B258583572451229eEeA6")
-                            .setValue(new BigInteger("1000000000"))
-                            .setGasPrice(new BigInteger("1000"))
-                            .setGasLimit(new BigInteger("800000"))
+//                            .setValue(new BigInteger("1000000000"))
+//                            .setGasPrice(new BigInteger("1000"))
+//                            .setGasLimit(new BigInteger("800000"))
+                            .setChainId(97)
 
                     );
             System.out.println(sendResultModel.getEthGetTransactionReceipt());
@@ -47,7 +48,8 @@ public class TestERC20 {
                     new BigInteger("1000000000000000000"),
                     SendModel.builder()
                             .setSenderAddress("0xb4e32492E9725c3215F1662Cf28Db1862ed1EE84")
-                            .setPrivateKey("")
+                            .setPrivateKey("0xc5e8d9324044970a6036ecc86203a6fb9f085dccb40f847704e12fc27a875295")
+                            .setChainId(97)
             );
 
             System.out.println(sendResultModel.getEthGetTransactionReceipt());
@@ -58,7 +60,8 @@ public class TestERC20 {
                     new BigInteger("1000000000000000000"),
                     SendModel.builder()
                             .setSenderAddress("0x552115849813d334C58f2757037F68E2963C4c5e")
-                            .setPrivateKey("")
+                            .setPrivateKey("0x4ae9473493d7fb89334adb3c144956043ca20a8d51f98d9527da68e6a5fa8b3b")
+                            .setChainId(97)
             );
 
             System.out.println(sendResultModel.getEthGetTransactionReceipt());
